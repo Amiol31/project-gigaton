@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projekti Gigaton: Plani CDR 1 Gt/vit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --c-bg: #020408;
+    --c-surface: rgba(255,255,255,0.04);
+    --c-border: rgba(255,255,255,0.10);
+    --c-border2: rgba(255,255,255,0.18);
+    --c-text: #f0f4f8;
+    --c-muted: rgba(200,215,230,0.65);
+    --c-accent: #00d4aa;
+    --c-accent2: #0099ff;
+    --c-warn: #ff6b35;
+    --font-display: 'Syne', sans-serif;
+    --font-body: 'Space Grotesk', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--c-bg);
+    color: var(--c-text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  .glass {
+    background: rgba(0,0,0,0.35);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid var(--c-border2);
+    box-shadow: inset 0 1px 1px rgba(255,255,255,0.12), 0 0 40px rgba(0,0,0,0.4);
+    position: relative;
+  }
+  .glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(160deg,
+      rgba(255,255,255,0.25) 0%,
+      rgba(255,255,255,0.05) 40%,
+      rgba(0,212,170,0.08) 70%,
+      rgba(255,255,255,0.15) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  /* NAVBAR */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 48px;
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 16px;
+    padding: 12px 24px;
+    gap: 24px;
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #fff;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .nav-logo span { color: var(--c-accent); }
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--c-muted);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: #fff; }
+  .nav-cta {
+    background: var(--c-accent);
+    color: #000;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: var(--font-body);
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.15s;
+    white-space: nowrap;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .nav-cta:hover { opacity: 0.85; transform: translateY(-1px); }
+
+  /* HERO */
+  #hero {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  #hero-video {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom,
+      rgba(2,4,8,0.55) 0%,
+      rgba(2,4,8,0.2) 50%,
+      rgba(2,4,8,0.85) 100%);
+    z-index: 1;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 0 48px 72px;
+    margin-top: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: end;
+    gap: 48px;
+  }
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--c-accent);
+    margin-bottom: 20px;
+  }
+  .hero-tag::before {
+    content: '';
+    width: 24px; height: 1px;
+    background: var(--c-accent);
+  }
+  h1.hero-heading {
+    font-family: var(--font-display);
+    font-size: clamp(2.8rem, 5.5vw, 5rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    margin-bottom: 20px;
+    color: #fff;
+  }
+  h1.hero-heading em { font-style: normal; color: var(--c-accent); }
+  .hero-sub {
+    font-size: 16px;
+    color: var(--c-muted);
+    max-width: 480px;
+    margin-bottom: 32px;
+    line-height: 1.7;
+  }
+  .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--c-accent);
+    color: #000;
+    padding: 12px 28px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    transition: opacity 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+  .btn-ghost {
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 12px 28px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-block;
+    backdrop-filter: blur(8px);
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-ghost:hover { background: rgba(255,255,255,0.14); transform: translateY(-1px); }
+
+  .hero-right-card {
+    border-radius: 20px;
+    padding: 28px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .stat-row { display: flex; flex-direction: column; gap: 4px; }
+  .stat-val {
+    font-family: var(--font-display);
+    font-size: 2.4rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: #fff;
+  }
+  .stat-label { font-size: 12px; color: var(--c-muted); letter-spacing: 0.05em; text-transform: uppercase; }
+  .stat-divider { height: 1px; background: var(--c-border); }
+
+  /* SECTIONS */
+  section {
+    padding: 100px 48px;
+    max-width: 1280px;
+    margin: 0 auto;
+    scroll-margin-top: 120px;
+  }
+  section + section { padding-top: 0; }
+  .section-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--c-accent);
+    margin-bottom: 16px;
+    opacity: 0.8;
+  }
+  .section-tag::before { content: ''; width: 18px; height: 1px; background: var(--c-accent); }
+  h2.section-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 12px;
+    color: #fff;
+  }
+  .section-subtitle {
+    color: var(--c-muted);
+    font-size: 16px;
+    max-width: 680px;
+    line-height: 1.7;
+    margin-bottom: 60px;
+  }
+
+  /* CHALLENGE */
+  #challenge { padding-top: 40px; }
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-bottom: 48px;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  .metric-card {
+    background: var(--c-surface);
+    padding: 36px 32px;
+    border: 1px solid var(--c-border);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .metric-card:first-child { border-radius: 20px 0 0 20px; }
+  .metric-card:last-child { border-radius: 0 20px 20px 0; }
+  .metric-num {
+    font-family: var(--font-display);
+    font-size: 3.5rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+  .metric-num.red { color: var(--c-warn); }
+  .metric-num.green { color: var(--c-accent); }
+  .metric-num.blue { color: var(--c-accent2); }
+  .metric-label { font-size: 13px; color: var(--c-muted); font-weight: 500; }
+  .metric-desc { font-size: 12px; color: rgba(200,215,230,0.45); margin-top: 4px; }
+  .challenge-text {
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-left: 3px solid var(--c-accent);
+    border-radius: 16px;
+    padding: 32px 36px;
+    color: var(--c-muted);
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  /* SOLUTION */
+  .solution-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+  .sol-card {
+    border-radius: 16px;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border: 1px solid var(--c-border);
+    background: var(--c-surface);
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .sol-card:hover { border-color: var(--c-accent); transform: translateY(-2px); }
+  .sol-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    background: rgba(0,212,170,0.12);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+  .sol-title { font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; color: var(--c-accent); letter-spacing: -0.03em; }
+  .sol-label { font-size: 13px; font-weight: 600; color: #fff; letter-spacing: 0.02em; }
+  .sol-desc { font-size: 13px; color: var(--c-muted); line-height: 1.6; }
+
+  .timeline {
+    position: relative;
+    padding-left: 28px;
+    border-left: 1px solid var(--c-border);
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  .timeline-item { position: relative; }
+  .timeline-dot {
+    position: absolute;
+    left: -36px; top: 6px;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--c-accent);
+    border: 2px solid var(--c-bg);
+    box-shadow: 0 0 10px rgba(0,212,170,0.5);
+  }
+  .timeline-dot.final { background: var(--c-warn); box-shadow: 0 0 12px rgba(255,107,53,0.5); }
+  .timeline-year { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--c-accent); font-weight: 600; margin-bottom: 4px; }
+  .timeline-year.final { color: var(--c-warn); }
+  .timeline-title { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 6px; }
+  .timeline-desc { font-size: 13px; color: var(--c-muted); line-height: 1.6; }
+
+  /* ECONOMICS */
+  .econ-top {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2px;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 48px;
+  }
+  .econ-card { background: var(--c-surface); border: 1px solid var(--c-border); padding: 32px 28px; }
+  .econ-card:first-child { border-radius: 20px 0 0 20px; }
+  .econ-card:last-child { border-radius: 0 20px 20px 0; background: rgba(255,107,53,0.06); border-color: rgba(255,107,53,0.25); }
+  .econ-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--c-muted); font-weight: 600; margin-bottom: 12px; }
+  .econ-num { font-family: var(--font-display); font-size: 2rem; font-weight: 800; letter-spacing: -0.03em; color: #fff; margin-bottom: 6px; }
+  .econ-num.red { color: var(--c-warn); }
+  .econ-sub { font-size: 12px; color: var(--c-muted); line-height: 1.5; }
+  .price-callout {
+    border-radius: 20px;
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    gap: 48px;
+    margin-bottom: 32px;
+  }
+  .price-big { font-family: var(--font-display); font-size: 5rem; font-weight: 800; letter-spacing: -0.05em; color: var(--c-warn); white-space: nowrap; line-height: 1; }
+  .price-context { flex: 1; }
+  .price-title { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+  .price-desc { font-size: 14px; color: var(--c-muted); line-height: 1.7; }
+  .cost-bar-wrap { margin-top: 40px; }
+  .cost-bar-label { font-size: 12px; color: var(--c-muted); margin-bottom: 16px; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; }
+  .cost-bar-track {
+    height: 48px; border-radius: 10px;
+    background: var(--c-surface); border: 1px solid var(--c-border);
+    display: flex; overflow: hidden; margin-bottom: 12px;
+  }
+  .cost-bar-seg { height: 100%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; letter-spacing: 0.03em; }
+  .cost-bar-seg.revenue { background: rgba(0,212,170,0.35); color: var(--c-accent); width: 16.3%; }
+  .cost-bar-seg.gap { background: rgba(255,107,53,0.22); color: var(--c-warn); flex: 1; }
+  .bar-legend { display: flex; gap: 24px; font-size: 13px; color: var(--c-muted); }
+  .bar-legend-dot { width: 8px; height: 8px; border-radius: 2px; display: inline-block; margin-right: 6px; vertical-align: middle; }
+  .revenue-sources { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 32px; }
+  .rev-item { background: var(--c-surface); border: 1px solid var(--c-border); border-radius: 12px; padding: 20px 24px; }
+  .rev-label { font-size: 12px; color: var(--c-muted); font-weight: 500; margin-bottom: 6px; }
+  .rev-val { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; color: var(--c-accent); }
+
+  /* IMPACT */
+  .impact-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .impact-card {
+    border-radius: 20px; padding: 36px 28px;
+    border: 1px solid var(--c-border); background: var(--c-surface);
+    display: flex; flex-direction: column; gap: 12px;
+    transition: transform 0.25s, border-color 0.25s;
+  }
+  .impact-card:hover { transform: translateY(-4px); border-color: rgba(0,212,170,0.4); }
+  .impact-icon { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 4px; }
+  .impact-icon.teal { background: rgba(0,212,170,0.12); }
+  .impact-icon.blue { background: rgba(0,153,255,0.12); }
+  .impact-icon.orange { background: rgba(255,107,53,0.12); }
+  .impact-title { font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; color: #fff; }
+  .impact-desc { font-size: 13px; color: var(--c-muted); line-height: 1.7; }
+
+  /* POLICY */
+  .policy-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .policy-card {
+    border-radius: 20px; padding: 32px 28px;
+    border: 1px solid var(--c-border); background: var(--c-surface);
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .policy-num { font-family: var(--font-display); font-size: 3rem; font-weight: 800; color: rgba(0,212,170,0.15); line-height: 1; letter-spacing: -0.04em; }
+  .policy-title { font-size: 1rem; font-weight: 700; color: #fff; margin-top: -4px; }
+  .policy-desc { font-size: 13px; color: var(--c-muted); line-height: 1.7; }
+  .policy-bullets { list-style: none; display: flex; flex-direction: column; gap: 6px; margin-top: 6px; }
+  .policy-bullets li { font-size: 12px; color: var(--c-muted); padding-left: 16px; position: relative; }
+  .policy-bullets li::before { content: '→'; position: absolute; left: 0; color: var(--c-accent); font-size: 11px; }
+  .policy-highlight { background: rgba(0,212,170,0.08); border: 1px solid rgba(0,212,170,0.2); border-radius: 8px; padding: 10px 14px; font-size: 12px; color: var(--c-accent); font-weight: 600; margin-top: 4px; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--c-border);
+    padding: 32px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+    color: rgba(200,215,230,0.35);
+  }
+  .footer-logo { font-family: var(--font-display); font-size: 16px; font-weight: 800; color: rgba(255,255,255,0.25); text-decoration: none; }
+  .footer-logo span { color: rgba(0,212,170,0.4); }
+
+  /* DECORATIVE */
+  .grid-bg {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 0%, rgba(0,0,0,0.3) 0%, transparent 80%);
+  }
+  .orb { position: fixed; border-radius: 50%; filter: blur(120px); pointer-events: none; z-index: 0; opacity: 0.12; }
+  .orb-1 { width: 600px; height: 600px; background: var(--c-accent); top: -200px; left: -100px; }
+  .orb-2 { width: 500px; height: 500px; background: var(--c-accent2); bottom: 200px; right: -100px; }
+  .section-bg { position: relative; z-index: 1; }
+
+  /* SCROLL REVEAL */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    section { padding: 80px 24px; }
+    .hero-content { grid-template-columns: 1fr; padding: 0 24px 56px; }
+    .hero-right-card { display: none; }
+    .metrics-grid { grid-template-columns: 1fr; border-radius: 16px; }
+    .metric-card:first-child { border-radius: 16px 16px 0 0; }
+    .metric-card:last-child { border-radius: 0 0 16px 16px; }
+    .solution-grid { grid-template-columns: 1fr; }
+    .econ-top { grid-template-columns: 1fr; }
+    .econ-card:first-child { border-radius: 16px 16px 0 0; }
+    .econ-card:last-child { border-radius: 0 0 16px 16px; }
+    .impact-cards { grid-template-columns: 1fr; }
+    .policy-grid { grid-template-columns: 1fr; }
+    .price-callout { flex-direction: column; gap: 16px; padding: 28px; }
+    .price-big { font-size: 3.5rem; }
+    footer { flex-direction: column; gap: 12px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="grid-bg"></div>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-inner glass">
+    <a href="#hero" class="nav-logo">PROJECT <span>GIGATON</span></a>
+    <ul class="nav-links">
+      <li><a href="#challenge">Sfida</a></li>
+      <li><a href="#solution">Zgjidhja</a></li>
+      <li><a href="#economics">Ekonomik</a></li>
+      <li><a href="#impact">Ndikimi</a></li>
+      <li><a href="#policy">Politika</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <video id="hero-video" autoplay loop muted playsinline>
+    <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260403_050628_c4e32401-fab4-4a27-b7a8-6e9291cd5959.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div>
+      <div class="hero-tag">Nisma Globale për Heqjen e Karbonit</div>
+      <h1 class="hero-heading">Rruga drejt<br><em>350 ppm</em></h1>
+      <p class="hero-sub">Një Strategji Gjithëpërfshirëse për të Vendosur 1 Gigaton në vit të Heqjes së Inxhinieruar të Dioksidit të Karbonit.</p>
+      <div class="hero-btns">
+        <a href="#policy" class="btn-primary">Shqyrto Kërkesën Financiare</a>
+        <a href="#challenge" class="btn-ghost">Zbulo Sfidën</a>
+      </div>
+    </div>
+    <div class="hero-right-card glass">
+      <div class="stat-row">
+        <div class="stat-val" style="color:#ff6b35">425 ppm</div>
+        <div class="stat-label">CO₂ Aktual Atmosferik</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-row">
+        <div class="stat-val" style="color:var(--c-accent)">350 ppm</div>
+        <div class="stat-label">Objektivi i Sigurt Klimatik</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-row">
+        <div class="stat-val">50 Gt</div>
+        <div class="stat-label">Mandati Total i Heqjes</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-bg">
+
+<!-- CHALLENGE -->
+<section id="challenge">
+  <div class="reveal">
+    <h2 class="section-title">Sfida: Pse 1 Gt/vit është e Panegociueshme</h2>
+    <p class="section-subtitle">Dekarbonizimi (ulja e emetimeve) është thelbësor, por nuk është më i mjaftueshëm.</p>
+  </div>
+  <div class="metrics-grid reveal">
+    <div class="metric-card">
+      <div class="metric-num red">425</div>
+      <div class="metric-label">CO₂ Aktual (ppm)</div>
+      <div class="metric-desc">Niveli më i lartë atmosferik në historinë njerëzore.</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-num green">350</div>
+      <div class="metric-label">Objektivi i Sigurt Klimatik (ppm)</div>
+      <div class="metric-desc">Synimi për stabilitetin klimatik para-industrial.</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-num blue">50 Gt</div>
+      <div class="metric-label">Mandati Total i Heqjes</div>
+      <div class="metric-desc">CO₂ i trashëguar që duhet të nxirret në mënyrë aktive.</div>
+    </div>
+  </div>
+  <div class="challenge-text reveal">
+    Duhet të heqim aktivisht 50 Gigaton CO₂ historik nga atmosfera për t'u rikthyer në mënyrë të sigurt në bazën klimatike para-industriale prej 350 ppm. Për ta arritur këtë brenda një afati të realizueshëm (50 vite), duhet të rrisim Direct Air Capture (DAC) për të hequr <strong style="color:#fff">1 Gt çdo vit</strong>.
+  </div>
+</section>
+
+<!-- SOLUTION -->
+<section id="solution">
+  <div class="reveal">
+    <h2 class="section-title">Zgjidhja: Shkallëzim dhe Infrastrukturë e Inxhinieruar</h2>
+    <p class="section-subtitle">Metrikat e vendosjes 1 Gt/vit që transformojnë planet tonë.</p>
+  </div>
+  <div class="solution-grid reveal">
+    <div class="sol-card">
+      <div class="sol-icon">🏭</div>
+      <div class="sol-title">1,000</div>
+      <div class="sol-label">Fabrika Globale</div>
+      <div class="sol-desc">Mesatarisht 1 Mt/vit kapacitet për çdo impiant, të shpërndara strategjikisht.</div>
+    </div>
+    <div class="sol-card">
+      <div class="sol-icon">⚡</div>
+      <div class="sol-title">212 GW</div>
+      <div class="sol-label">Energji e Dedikuar</div>
+      <div class="sol-desc">Nevojitet infrastrukturë e re energjie 100% me karbon të ulët.</div>
+    </div>
+    <div class="sol-card">
+      <div class="sol-icon">💰</div>
+      <div class="sol-title">$3.0T</div>
+      <div class="sol-label">CapEx Total</div>
+      <div class="sol-desc">Investimi total kapital për fabrikat dhe infrastrukturën energjetike.</div>
+    </div>
+    <div class="sol-card">
+      <div class="sol-icon">📊</div>
+      <div class="sol-title">$410B</div>
+      <div class="sol-label">OpEx Vjetor</div>
+      <div class="sol-desc">Kostot operative vjetore: mirëmbajtje, punë, materiale konsumi.</div>
+    </div>
+  </div>
+  <div class="reveal">
+    <h3 style="font-family:var(--font-display);font-size:1.3rem;font-weight:700;color:#fff;margin-bottom:32px;letter-spacing:-0.02em;">Afati i Vendosjes (2025 – 2045)</h3>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2025 – 2027</div>
+        <div class="timeline-title">Faza e Themelimit (1 Mt/vit)</div>
+        <div class="timeline-desc">Konsolidim i R&D, standardizim i projektimit të impianteve dhe sigurimi i marrëveshjeve AMC 20-vjeçare.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2028 – 2030</div>
+        <div class="timeline-title">Faza e Rritjes (10 Mt/vit)</div>
+        <div class="timeline-desc">Vënia në funksion e 10-20 impianteve të mëdha. Fillimi i zhvillimit të zinxhirit kritik të furnizimit.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2031 – 2035</div>
+        <div class="timeline-title">Faza e Industrializimit (100 Mt/vit)</div>
+        <div class="timeline-desc">Rritje e prodhimit masiv dhe ndërtim i qendrave të dedikuara të energjisë së rinovueshme në shkallë GW.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot final"></div>
+        <div class="timeline-year final">2040 – 2045 · OBJEKTIVI</div>
+        <div class="timeline-title">Kapaciteti i Plotë (1 Gt/vit)</div>
+        <div class="timeline-desc">Kapaciteti i plotë vjetor i heqjes arrihet dhe ruhet për pastrimin e CO₂ historik.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ECONOMICS -->
+<section id="economics">
+  <div class="reveal">
+    <h2 class="section-title">Ekonomia: Kostoja, të Ardhurat dhe Hendeku</h2>
+    <p class="section-subtitle">Pamje vjetore financiare e projektit 1 Gt/vit.</p>
+  </div>
+  <div class="econ-top reveal">
+    <div class="econ-card">
+      <div class="econ-label">Shpenzimi Total Vjetor</div>
+      <div class="econ-num">$560B</div>
+      <div class="econ-sub">OpEx + CapEx i amortizuar</div>
+    </div>
+    <div class="econ-card">
+      <div class="econ-label">Të Ardhura nga Nënproduktet</div>
+      <div class="econ-num" style="color:var(--c-accent)">$91.5B</div>
+      <div class="econ-sub">Shitje Karboni + Oksigjen</div>
+    </div>
+    <div class="econ-card">
+      <div class="econ-label">Subvencioni i Nevojshëm</div>
+      <div class="econ-num red">$468.5B</div>
+      <div class="econ-sub">Hendeku vjetor i financimit</div>
+    </div>
+  </div>
+  <div class="price-callout glass reveal">
+    <div class="price-big">$468.50</div>
+    <div class="price-context">
+      <div class="price-title">Çmimi i Kërkuar nga Politika (Pika e Barazimit)</div>
+      <div class="price-desc">Ky është çmimi i garantuar i nevojshëm përmes një Advanced Market Commitment (AMC) për ta bërë projektin financiarisht të qëndrueshëm dhe për të mbyllur hendekun vjetor të financimit.</div>
+    </div>
+  </div>
+  <div class="cost-bar-wrap reveal">
+    <div class="cost-bar-label">Vizualizimi i Kompensimit Vjetor ($560B Total)</div>
+    <div class="cost-bar-track">
+      <div class="cost-bar-seg revenue">16%</div>
+      <div class="cost-bar-seg gap">84%</div>
+    </div>
+    <div class="bar-legend">
+      <span><span class="bar-legend-dot" style="background:rgba(0,212,170,0.6)"></span>Të ardhura $91.5B (16%)</span>
+      <span><span class="bar-legend-dot" style="background:rgba(255,107,53,0.5)"></span>Boshkëlqimi i financimit $468.5B (84%)</span>
+    </div>
+  </div>
+  <div class="revenue-sources reveal">
+    <div class="rev-item">
+      <div class="rev-label">Të ardhurat e karbonit</div>
+      <div class="rev-val">$40.5B</div>
+      <div style="font-size:12px;color:var(--c-muted);margin-top:4px">0.27 Gt/yr @ $150/t</div>
+    </div>
+    <div class="rev-item">
+      <div class="rev-label">Të ardhurat e oksigjenit</div>
+      <div class="rev-val">$51.0B</div>
+      <div style="font-size:12px;color:var(--c-muted);margin-top:4px">0.73 Gt/yr @ $70/t</div>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACT -->
+<section id="impact">
+  <div class="reveal">
+    <div class="section-tag">Përfitime Dytësore</div>
+    <h2 class="section-title">Ndikimi Mjedisor: Përtej Karbonit</h2>
+    <p class="section-subtitle">Vendosja në shkallë globale sjell përfitime dytësore të matshme.</p>
+  </div>
+  <div class="impact-cards reveal">
+    <div class="impact-card">
+      <div class="impact-icon teal">🌡️</div>
+      <div class="impact-title">Ftohja Globale</div>
+      <div class="impact-desc">Rikthimi i atmosferës në 350 ppm është thelbësor për të parandaluar acidifikimin e oqeaneve dhe për të kufizuar rritjen e temperaturës mesatare globale në nivele të sigurta.</div>
+    </div>
+    <div class="impact-card">
+      <div class="impact-icon blue">🪨</div>
+      <div class="impact-title">Nënprodukt i Ngurtë i Karbonit</div>
+      <div class="impact-desc">CO₂ i kapur shndërrohet në karbon të ngurtë, inert dhe të qëndrueshëm, i përshtatshëm për depozitimin e përhershëm gjeologjik ose në ndërtim pa rrezik rrjedhjeje.</div>
+    </div>
+    <div class="impact-card">
+      <div class="impact-icon orange">🌬️</div>
+      <div class="impact-title">Çlirimi i Pastër i Oksigjenit</div>
+      <div class="impact-desc">Nënprodukt i vlefshëm (O₂) kthehet në atmosferë, duke ofruar mbështetje pozitive për cilësinë e ajrit lokal dhe përdorimin industrial.</div>
+    </div>
+  </div>
+</section>
+
+<!-- POLICY -->
+<section id="policy" style="padding-bottom:120px">
+  <div class="reveal">
+    <h2 class="section-title">Politika: Mbyllja e Boshllëkut</h2>
+    <p class="section-subtitle">Modeli i Shërbimit të Karbonit — investimi është i madh, por kostoja e mosveprimit është planetare.</p>
+  </div>
+  <div class="policy-grid reveal">
+    <div class="policy-card">
+      <div class="policy-num">01</div>
+      <div class="policy-title">Siguri e të Ardhurave (AMCs)</div>
+      <div class="policy-desc">Trajto heqjen 1 Gt/vit si një shërbim publik thelbësor — një Shërbim Publik i Karbonit që kërkon garanci afatgjata.</div>
+      <ul class="policy-bullets">
+        <li>Qeveritë duhet të garantojnë kontrata 20-vjeçare blerjeje.</li>
+        <li>Çmimi minimal duhet të fiksohet në pikën e barazimit $468.50/ton.</li>
+      </ul>
+    </div>
+    <div class="policy-card">
+      <div class="policy-num">02</div>
+      <div class="policy-title">Rrjedha e Financimit të Dedikuar (CRF)</div>
+      <div class="policy-desc">Kompania e shërbimeve financohet nga një tarifë e re dhe specifike mbi emetimet e mbetura nga sektorët e vështirë.</div>
+      <ul class="policy-bullets">
+        <li>Propozim: Tarifa për Heqjen e Karbonit (THC)</li>
+        <li>CRF do të gjenerojë subvencionin vjetor të kërkuar prej $468.5B.</li>
+      </ul>
+      <div class="policy-highlight">$468.5 Miliardë / vit nga emetuesit globalë</div>
+    </div>
+    <div class="policy-card">
+      <div class="policy-num">03</div>
+      <div class="policy-title">Mandati Etik (SLoO)</div>
+      <div class="policy-desc">Siguro Licencën Sociale për të Operuar (SLoO) me mandate të forta mjedisore dhe komunitare.</div>
+      <ul class="policy-bullets">
+        <li>Energji: 100% Zero-Karbon, furnizim i dedikuar.</li>
+        <li>Ujë: 100% burime jo-ujë i pijshëm (ujëra të ndotura/ujë deti).</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</div><!-- end section-bg -->
+
+<!-- FOOTER -->
+<footer>
+  <a href="#hero" class="footer-logo">PROJECT <span>GIGATON</span></a>
+  <span>© 2025 Project Gigaton. All rights reserved. | DAC to 350 ppm.</span>
+  <span>Built with precision &amp; purpose.</span>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Hero video fallback
+  document.getElementById('hero-video').addEventListener('error', () => {
+    document.getElementById('hero').style.background = 'linear-gradient(160deg, #020408 0%, #051a14 50%, #020408 100%)';
+  });
+</script>
+</body>
+</html>
